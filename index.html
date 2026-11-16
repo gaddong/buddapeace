@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>오늘의 사유 (思惟) - 불교 지혜로 전하는 마음 쉼터</title>
+  
+  <!-- 단아한 구글 한글 웹폰트 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+  <!-- 분리된 전용 스타일시트 -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- 한지 질감 배경 오버레이 -->
+  <div class="hanji-bg-pattern"></div>
+
+  <!-- 모바일 메인 프레임 -->
+  <div class="mobile-frame">
+    
+    <!-- 상단 장식 헤더 -->
+    <header class="temple-top-bar">
+      <div class="temple-sign">
+        <span>❖</span>
+        <span>산사(山寺)의 뜨락</span>
+      </div>
+      <button class="sound-btn" id="soundBtn" aria-label="목탁 소리 켜기/끄기">
+        <span id="soundIcon">🔔</span>
+        <span id="soundText">목탁 켬</span>
+      </button>
+    </header>
+
+    <!-- =========================================================
+         [1. 첫 화면: 대문]
+         ========================================================= -->
+    <section class="view-screen active" id="view-intro">
+      <div class="intro-header-area">
+        <span class="intro-tag">마음 쉼터</span>
+        <h1 class="intro-service-title">오늘의 사유 <span class="hanja">(思惟)</span></h1>
+        <p class="intro-service-desc">
+          하루를 마무리하며 생각을 정리하고<br>
+          불교적 관점으로 위로해주는 서비스
+        </p>
+      </div>
+
+      <div class="intro-art-visual">
+        <div class="ambient-moon-glow"></div>
+        <!-- 연꽃 일러스트 SVG -->
+        <svg class="lotus-icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M50 16C50 16 36 38 36 56C36 65 42 72 50 72C58 72 64 65 64 56C64 38 50 16 50 16Z" fill="#D47474" opacity="0.9"/>
+          <path d="M50 30C50 30 20 45 20 62C20 74 30 78 40 78C46 78 49 75 50 72C43 68 40 60 40 54C40 44 50 30 50 30Z" fill="#E69C9C" opacity="0.85"/>
+          <path d="M50 30C50 30 80 45 80 62C80 74 70 78 60 78C54 78 51 75 50 72C57 68 60 60 60 54C60 44 50 30 50 30Z" fill="#E69C9C" opacity="0.85"/>
+          <path d="M50 50C50 50 10 58 10 74C10 82 20 86 32 86C42 86 48 80 50 75C42 72 38 64 38 58C38 52 50 50 50 50Z" fill="#F5DFDB" opacity="0.75"/>
+          <path d="M50 50C50 50 90 58 90 74C90 82 80 86 68 86C58 86 52 80 50 75C58 72 62 64 62 58C62 52 50 50 50 50Z" fill="#F5DFDB" opacity="0.75"/>
+          <circle cx="50" cy="55" r="4.5" fill="#C29B38"/>
+        </svg>
+      </div>
+
+      <div class="intro-callout-card">
+        "바람이 불어 흔들리는 것은 바람 탓이 아니요,<br>
+        흔들리는 내 마음을 알아차릴 때 고요해집니다."
+      </div>
+
+      <!-- 첫화면 필수 버튼: ‘잠시 쉬어가기’ 버튼 -->
+      <button class="zen-btn-primary" id="btnRestStart">
+        <span>📿</span>
+        <span>잠시 쉬어가기</span>
+      </button>
+    </section>
+
+    <!-- =========================================================
+         [2. 입력 화면: 마음 살피기 (가로 한줄씩 버튼 -> 누르면 텍스트창 변환)]
+         ========================================================= -->
+    <section class="view-screen" id="view-input">
+      <div class="input-screen-header">
+        <p class="section-surtitle">마음 살피기</p>
+        <h2 class="section-main-title">오늘 마음의 결을<br>가만히 들여다보세요</h2>
+      </div>
+
+      <!-- 마음의 번뇌·평온 지수 슬라이더 -->
+      <div class="mind-slider-box">
+        <div class="mind-slider-top">
+          <span class="mind-slider-title">
+            <span>🎐</span> 마음의 번뇌·평온 지수
+          </span>
+          <span class="mind-slider-pill" id="sliderBadge">잔잔한 사유 (35)</span>
+        </div>
+        <input 
+          type="range" 
+          id="mindWeightRange" 
+          class="zen-range-input" 
+          min="0" 
+          max="100" 
+          value="35"
+          step="1"
+          aria-label="마음의 번뇌와 평온 지수 슬라이더"
+        >
+        <div class="zen-slider-scale">
+          <span>평온함 (0)</span>
+          <span>잔잔함 (50)</span>
+          <span>깊은 번민 (100)</span>
+        </div>
+      </div>
+
+      <!-- 유효성 경고 배너 -->
+      <div class="alert-banner" id="alertBanner">
+        <span>⚠️</span>
+        <span id="alertBannerMsg">살펴볼 마음(고민, 생각, 감사) 중 하나를 눌러 내용을 적어주세요.</span>
+      </div>
+
+      <!-- 가로로 한줄씩 놓인 고민, 생각, 감사 버튼 -->
+      <div class="mind-list-section">
+        <div class="mind-list-guide-label">
+          <span>살펴볼 마음을 선택해주세요</span>
+          <span style="font-size: 11px; color: var(--dancheong-gold);">누르면 입력창으로 바뀝니다</span>
+        </div>
+
+        <div class="mind-items-stack">
+          
+          <!-- 항목 1: 고민 -->
+          <div class="mind-row-slot" id="slotWorry">
+            <button type="button" class="mind-row-button" id="btnOpenWorry">
+              <div class="btn-left">
+                <span class="item-icon">🌧️</span>
+                <span class="item-title">오늘의 고민</span>
+                <span class="item-preview" id="previewWorry"></span>
+              </div>
+              <div class="btn-right">
+                <span class="action-pill" id="pillWorry">작성하기 +</span>
+              </div>
+            </button>
+
+            <div class="mind-row-editor" id="editorWorry">
+              <div class="editor-top-bar">
+                <span class="editor-label"><span>🌧️</span> 오늘의 고민</span>
+                <button type="button" class="btn-fold-done" data-slot="slotWorry">접기 / 완료 ✓</button>
+              </div>
+              <textarea 
+                id="textWorry" 
+                class="editor-textarea" 
+                placeholder="마음을 짓누르거나 불안하게 만드는 일은 무엇인가요?"
+              ></textarea>
+              <div class="editor-chips">
+                <button type="button" class="chip-btn" data-input="textWorry" data-text="인간관계에서 오해와 갈등으로 마음이 많이 상했습니다.">인간관계 갈등</button>
+                <button type="button" class="chip-btn" data-input="textWorry" data-text="앞날에 대한 불안과 조급함에 잠을 이루기 힘듭니다.">미래·진로 불안</button>
+                <button type="button" class="chip-btn" data-input="textWorry" data-text="너무 지치고 모든 일에 번아웃이 온 것 같아요.">번아웃·피로</button>
+                <button type="button" class="chip-btn" data-input="textWorry" data-text="마음속에서 화가 불쑥불쑥 치밀어 올라 주체가 안 됩니다.">화와 분노</button>
+                <button type="button" class="chip-btn" data-input="textWorry" data-text="세상에 나 혼자만 남겨진 것 같은 외로움이 듭니다.">외로움과 고독</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 항목 2: 생각 -->
+          <div class="mind-row-slot" id="slotThought">
+            <button type="button" class="mind-row-button" id="btnOpenThought">
+              <div class="btn-left">
+                <span class="item-icon">🍃</span>
+                <span class="item-title">오늘의 생각</span>
+                <span class="item-preview" id="previewThought"></span>
+              </div>
+              <div class="btn-right">
+                <span class="action-pill" id="pillThought">작성하기 +</span>
+              </div>
+            </button>
+
+            <div class="mind-row-editor" id="editorThought">
+              <div class="editor-top-bar">
+                <span class="editor-label"><span>🍃</span> 오늘의 생각</span>
+                <button type="button" class="btn-fold-done" data-slot="slotThought">접기 / 완료 ✓</button>
+              </div>
+              <textarea 
+                id="textThought" 
+                class="editor-textarea" 
+                placeholder="오늘 하루 머릿속을 맴돌았던 단상이나 떠오르는 생각"
+              ></textarea>
+              <div class="editor-chips">
+                <button type="button" class="chip-btn" data-input="textThought" data-text="남들과 자꾸 비교하게 되어 내 자신이 초라하게 느껴집니다.">남과의 비교</button>
+                <button type="button" class="chip-btn" data-input="textThought" data-text="지나간 일에 대한 후회와 집착을 그만 내려놓고 싶어요.">지나간 집착</button>
+                <button type="button" class="chip-btn" data-input="textThought" data-text="욕심을 덜어내고 온전히 오늘 하루에 집중하고 싶습니다.">비움과 무소유</button>
+                <button type="button" class="chip-btn" data-input="textThought" data-text="가족이나 연인에게 서운했던 감정이 쉽게 가라앉지 않아요.">가족·연인 애착</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 항목 3: 감사 -->
+          <div class="mind-row-slot" id="slotGratitude">
+            <button type="button" class="mind-row-button" id="btnOpenGratitude">
+              <div class="btn-left">
+                <span class="item-icon">☀️</span>
+                <span class="item-title">감사할 일</span>
+                <span class="item-preview" id="previewGratitude"></span>
+              </div>
+              <div class="btn-right">
+                <span class="action-pill" id="pillGratitude">작성하기 +</span>
+              </div>
+            </button>
+
+            <div class="mind-row-editor" id="editorGratitude">
+              <div class="editor-top-bar">
+                <span class="editor-label"><span>☀️</span> 감사할 일</span>
+                <button type="button" class="btn-fold-done" data-slot="slotGratitude">접기 / 완료 ✓</button>
+              </div>
+              <textarea 
+                id="textGratitude" 
+                class="editor-textarea" 
+                placeholder="작아도 감사했던 순간, 고마웠던 인연이나 온기"
+              ></textarea>
+              <div class="editor-chips">
+                <button type="button" class="chip-btn" data-input="textGratitude" data-text="오늘 하루도 무탈하게 숨 쉬고 있음에 감사합니다.">무탈한 하루</button>
+                <button type="button" class="chip-btn" data-input="textGratitude" data-text="지친 하루 끝에 따뜻한 쉼터와 차 한 잔이 있음에 고맙습니다.">작은 안식</button>
+                <button type="button" class="chip-btn" data-input="textGratitude" data-text="묵묵히 내 편이 되어준 소중한 사람에게 고맙습니다.">소중한 인연</button>
+                <button type="button" class="chip-btn" data-input="textGratitude" data-text="오늘 작은 실패 속에서도 하나를 배울 수 있음에 감사합니다.">배움의 감사</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 결과 출력 버튼 -->
+      <button class="zen-btn-primary" id="btnNamuResult">
+        <span>📿</span>
+        <span>나무아미타불 (결과 보기)</span>
+      </button>
+    </section>
+
+    <!-- =========================================================
+         [3. 결과 화면: 불교 교리와 스님 명언]
+         ========================================================= -->
+    <section class="view-screen" id="view-result">
+      
+      <div class="scroll-card">
+        <div class="scroll-rod"></div>
+
+        <div class="result-badge-wrap">
+          <span class="quote-category-tag">
+            <span>🪷</span> <span id="displayCategory">인연과 비움의 지혜</span>
+          </span>
+          <span class="quote-number-pill" id="quoteCounter">지혜의 말씀 #1</span>
+        </div>
+
+        <!-- 불교 교리 및 명언 -->
+        <div class="quote-box">
+          <span class="quote-mark">“</span>
+          <p class="quote-text" id="displayQuote">
+            모든 것은 인연 따라 생겨나고 인연 따라 흩어지느니라.<br>
+            억지로 잡으려 하지 말고 흐르는 강물처럼 흘려보내라.
+          </p>
+          <span class="quote-source" id="displaySource">- 법구경 (法句經) -</span>
+        </div>
+
+        <div class="pattern-divider">❖ ❖ ❖</div>
+
+        <!-- 작성한 내용과 1:1로 밀접하게 어울리는 맞춤 처방 멘트 -->
+        <div class="counsel-box">
+          <div class="counsel-tagline">
+            <span>🌿</span>
+            <span>마음의 처방과 위로</span>
+          </div>
+          <p class="counsel-body" id="displayCounsel">
+            오늘 그대가 겪은 번민은 그대가 부족해서가 아니라, 삶이라는 길에 잠시 돌부리가 놓인 것뿐입니다. 바람을 움켜쥐려 하지 말고 창문을 열어두듯 그 마음을 가만히 내려놓으세요.
+          </p>
+
+          <!-- 사용자 입력 인용 -->
+          <div class="user-record-quote" id="displayUserRef">
+            <!-- 동적 렌더링 -->
+          </div>
+        </div>
+      </div>
+
+      <!-- 결과 액션 버튼군 -->
+      <div class="result-buttons">
+        <button class="zen-btn-primary" id="btnAnotherQuote">
+          <span>🔄</span>
+          <span>다른 명언보기</span>
+        </button>
+
+        <button class="zen-btn-outline" id="btnSaveQuote">
+          <span>📋</span>
+          <span>이 말씀 마음에 담아두기 (복사)</span>
+        </button>
+
+        <button class="zen-link-btn" id="btnBackToStart">
+          처음으로 돌아가 다시 사유하기
+        </button>
+      </div>
+
+    </section>
+
+    <!-- 명상 로딩 오버레이 -->
+    <div class="meditation-loader" id="meditationLoader">
+      <div class="moktak-halo">
+        <span style="font-size: 32px;">📿</span>
+      </div>
+      <p class="loader-title">마음의 매듭을 푸는 중입니다...</p>
+      <p class="loader-sub">잠시 눈을 감고 깊은 숨을 들이쉬어 보세요.</p>
+    </div>
+
+    <!-- 토스트 알림창 -->
+    <div class="temple-toast" id="templeToast">마음에 평온이 깃들었습니다.</div>
+
+  </div>
+
+  <!-- 분리된 전용 스크립트 -->
+  <script src="app.js"></script>
+</body>
+</html>
